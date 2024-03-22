@@ -12,14 +12,18 @@ import Error404 from "./components/Error404.jsx"
 import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
 import TransactionAdd from "./components/TransactionAdd.jsx"
-import TransactionSearch from "./components/TransactionSearch.jsx"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './components/NavBar.jsx';
+import Profile from './Profile.jsx';
+import MyTrips from './components/MyTrips.jsx';
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <UserDashboard />,
-        errorElement: <Error404 />
+            path: "/",
+            element: <UserDashboard />,
+            errorElement: <Error404 />
     },
+
     {
         path: "/test",
         element: <Test />,
@@ -27,25 +31,34 @@ const router = createBrowserRouter([
     {
         path: "/transactions",
         element: <Transactions />,
-//         children: [
-//             {
-//                 path: "/transactions/:transactionID",
-//                 element: <TransactionDisplayByID />,
-//             },
-//         ]
+        children: [
+            {
+                path: "/transactions/:transactionID",
+                element: <TransactionDisplayByID />,
+            },
+        ]
     },
     {
         path: "/transactions/add",
         element: <TransactionAdd />,
     },
     {
-        path: "/transactions/search",
-        element: <TransactionSearch />,
+        path: "/profile",
+        element: <Profile />,
+        errorElement: <Error404 />
+
     },
+    {
+        path: "/myTrips",
+        element: <MyTrips />,
+        errorElement: <Error404 />
+
+    },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
   </React.StrictMode>,
 )
