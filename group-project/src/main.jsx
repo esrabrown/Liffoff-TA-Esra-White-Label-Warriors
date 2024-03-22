@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar.jsx';
 import Profile from './Profile.jsx';
 import MyTrips from './components/MyTrips.jsx';
+import TransactionSearch from "./components/TransactionSearch.jsx"
 
 const router = createBrowserRouter([
     {
@@ -31,12 +32,12 @@ const router = createBrowserRouter([
     {
         path: "/transactions",
         element: <Transactions />,
-        children: [
-            {
-                path: "/transactions/:transactionID",
-                element: <TransactionDisplayByID />,
-            },
-        ]
+//         children: [
+//             {
+//                 path: "/transactions/:transactionID",
+//                 element: <TransactionDisplayByID />,
+//             },
+//         ]
     },
     {
         path: "/transactions/add",
@@ -55,6 +56,9 @@ const router = createBrowserRouter([
 
     },
 
+        path: "/transactions/search",
+        element: <TransactionSearch />,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
