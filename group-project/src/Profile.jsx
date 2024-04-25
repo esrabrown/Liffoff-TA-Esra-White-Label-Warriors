@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
 import { useParams } from "react-router-dom";
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 
 import React from 'react';
 import {
@@ -28,14 +29,9 @@ import {
 
 export default function Profile() {
 
-    const [user, setUser] = useState({
-      firstName: '',
-      lastName: '',
-      username: '',
-      defaultCurrency: ''
-  });
-
+    const [user, setUser] = useState([]);
     const [favoriteRates, setFavoriteRates] = useState([]);
+    const [ profile, setProfile ] = useState([]);
 
     // const { username } = useParams();
 
@@ -44,6 +40,12 @@ export default function Profile() {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
+                  const res = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json'
+                    }
+                });
                   // const response = await axios.get('http://localhost:8080/profile', {
                   //       headers: {
                   //           Authorization: `Bearer ${token}`
@@ -52,8 +54,10 @@ export default function Profile() {
                   //   setUser(response.data);
                     const decodedToken = jwtDecode(token);
                     setUser(decodedToken);
+                setProfile(res.data);
                 } else {
                   setUser(null);
+                  setProfile(null);
                 }
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -64,6 +68,34 @@ export default function Profile() {
 
     }, []);
 
+    const login = useGoogleLogin({
+      onSuccess: (codeResponse) => setUser(codeResponse),
+      onError: (error) => console.log('Login Failed:', error)
+  });
+
+//   useEffect(
+//     () => {
+//         if (user) {
+//             axios
+//                 .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+//                     headers: {
+//                         Authorization: `Bearer ${user.access_token}`,
+//                         Accept: 'application/json'
+//                     }
+//                 })
+//                 .then((res) => {
+//                     setProfile(res.data);
+//                 })
+//                 .catch((err) => console.log(err));
+//         }
+//     },
+//     [ user ]
+// );
+
+const logOut = () => {
+  googleLogout();
+  setProfile(null);
+};
   //   useEffect(() => {
   //     const displayUserInfo = async () => {
   //       try {
@@ -128,7 +160,7 @@ export default function Profile() {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
-        {user ? (
+        {profile ? (
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
@@ -140,7 +172,7 @@ export default function Profile() {
                   style={{ width: '150px' }}
                   fluid />
                 <p className="text-muted mb-4">Trip Wallet Member</p>
-                <p className="text-muted mb-4">{user.username}</p>
+                <p className="text-muted mb-4">{profile.name}</p>
               </MDBCardBody>
             </MDBCard>
 
@@ -149,11 +181,7 @@ export default function Profile() {
                 <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="google fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>Google Login</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                    <MDBCardText>Facebook Login</MDBCardText>
+                    <MDBCardText>{profile.email}</MDBCardText>
                   </MDBListGroupItem>
                 </MDBListGroup>
               </MDBCardBody>
@@ -167,7 +195,7 @@ export default function Profile() {
                     <MDBCardText>Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{user.firstName} {user.lastName}</MDBCardText>
+                    <MDBCardText className="text-muted">{profile.name} {user.lastName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />

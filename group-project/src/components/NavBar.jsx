@@ -5,15 +5,25 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    useNavigate
 } from "react-router-dom";
 import UserDashboard from '../UserDashboard';
+import {googleLogout } from '@react-oauth/google';
 
 export default class NavBar extends Component {
     render() {
+
       const handleLogout = () => {
-        window.localStorage.removeItem("token");
-        }
+        // $.post("/logout", function() { //posts to /logout and clears dynamic content
+          window.localStorage.removeItem("token");
+          // googleLogout();
+        //   $("#user").html('');
+        //   $(".unauthenticated").show();
+        //   $(".authenticated").hide();
+        // })
+        // return true;
+      }
         return (
             // <Router>
             <div>

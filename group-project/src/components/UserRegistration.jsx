@@ -81,8 +81,19 @@ export default function UserRegistration() {
             </div>
             <br />
 
+
             <input type="submit" onClick={handleSubmit}/>
         </form>
     </div>
     );
 }
+
+// //extract id
+// import { GoogleCredentialResponse } from '../types';
+
+// export function extractClientId(
+//   credentialResponse: GoogleCredentialResponse,
+// ): string | undefined {
+//   const clientId =
+//     credentialResponse?.clientId ?? credentialResponse?.client_id;
+//   return clientId;
