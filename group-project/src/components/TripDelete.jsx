@@ -16,11 +16,14 @@ export default function tripDelete (){
       console.log(id)
       console.log(trip)
         const deleteTrip = async (id)=>{
+        try{
             await fetch("http://localhost:8080/trips/" + id,{
                 method:"DELETE",
                 headers:{"Content-Type":"application/json",
                 Authorization: 'Bearer ' + localStorage.getItem('token')}
             }).then(()=>console.log("record deleted")).then(()=>navigate("/trips"))
+            }
+            catch(errors){console.log(errors)}
         }
         deleteTrip(id);
       }, []);

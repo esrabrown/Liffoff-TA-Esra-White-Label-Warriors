@@ -17,9 +17,42 @@ export default function Trips() {
         navigate('/trips/update/' + id);
     }
 
+    const deleteTripTransactions = async (response)=>{
+        await response.map((data)=>{
+
+          fetch("http://localhost:8080/transactions/" + data.id,{
+                        method:"DELETE",
+                        headers:{"Content-Type":"application/json",
+                        Authorization: 'Bearer ' + localStorage.getItem('token')}
+                    }).then(()=>console.log("transactions deleted"))
+
+                    })
+      }
+
+       const deleteTrip = async (id)=>{
+          await fetch("http://localhost:8080/trips/" + id,{
+              method:"DELETE",
+              headers:{"Content-Type":"application/json",
+              Authorization: 'Bearer ' + localStorage.getItem('token')}
+          }).then(()=>console.log("trip deleted"))
+          }
+
     const handleDelete = (e,id)=>{
         e.preventDefault();
-        navigate("/trips/delete/" + id);
+
+        const fetchTripTransactions = async (id)=>{
+           const response = await fetch("http://localhost:8080/transactions/searchByTripID?ID=" + id,{
+                headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then((res)=>res.json())
+            console.log(response);
+            deleteTripTransactions(response);
+            }
+
+        fetchTripTransactions(id);
+        //deleteTripTransactions(response);
+        deleteTrip(id);
+        deleteTrip(id);
+
+        //navigate("/trips/delete/" + id);
     }
 
     return (

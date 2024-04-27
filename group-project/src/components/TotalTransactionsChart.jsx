@@ -343,7 +343,10 @@ export default function TotalTransactionsChart(){
 
     return(
     <>
-    <h2>hello</h2>
+                <Link to="/transactions">| Back to Transactions |</Link>
+                <Link to="/transactions/convert">| Convert! |</Link>
+
+    <h2>Total Transactions</h2>
         <Doughnut
             data={{
               labels: totalTransactions.map((data)=> data.currency),

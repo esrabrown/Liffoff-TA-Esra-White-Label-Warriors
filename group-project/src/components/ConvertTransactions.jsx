@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
 
     export default function convertTransactions(props){
-        const [rate, setRate] = useState({});
+        const [rate, setRate] = useState(0);
         const [number, setNumber] = useState(0);
         const [convertTransaction, setConvertTransaction] = useState({
             amount: 0,
@@ -15,10 +15,7 @@ import Header from "./Header.jsx"
         //React DOM is one render behind and sallow monitors arrays and objects so you have to let it know when to re-render
         //when rate changes meaning its holding the object returned from the api then setNumber & re render with now updated value making the DOM have the current value
         useEffect(()=>{
-            console.log(rate)
-            //const c = '"' + convertTransaction.end + '"';
-            //console.log(c);
-            setNumber(rate.rates);
+            setNumber(rate);
         },[rate])
 
         const convertT = async (e) =>{
@@ -31,7 +28,7 @@ import Header from "./Header.jsx"
             const result = await fetch(URL, {
                 method: "GET",
                 headers:{"Content-Type":"application/json"},
-            }).then(res=>res.json()).then((result)=>{setRate(result);});
+            }).then(res=>res.json()).then((result)=>{setRate(result.rates[convertTransaction.end]);});
         }
 
         //update convertTransaction object with new updated values that also allow for values on screen to change using value = {convertTransaction.variableName}
@@ -43,6 +40,10 @@ import Header from "./Header.jsx"
 
         return(
             <>
+                <Link to="/transactions">| Back to Transactions |</Link>
+                <Link to="/transactions/chart">| Chart Breakdown |</Link>
+
+
                 <h2>Convert Currency Here!</h2>
 
                 <form method="POST">
@@ -77,7 +78,7 @@ import Header from "./Header.jsx"
                 <br /><input type="submit" value="Convert!" onClick={convertT}/>
 
                 </form>
-                <h2> {convertTransaction.amount} {convertTransaction.start} turns into {JSON.stringify(number)}</h2>
+                <h2> {convertTransaction.amount} {convertTransaction.start} turns into {number} {convertTransaction.end}</h2>
             </>
         )
     }

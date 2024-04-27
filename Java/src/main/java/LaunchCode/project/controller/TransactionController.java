@@ -35,6 +35,9 @@ public class TransactionController {
         return "Transaction Deleted.";
     }
 
+//    @DeleteMapping("/delete")
+//    public String deleteTripTransactions()
+
     @PostMapping("/add")
     public String addTransaction(@RequestBody Transaction transaction) {
         transactionService.saveTransaction(transaction);

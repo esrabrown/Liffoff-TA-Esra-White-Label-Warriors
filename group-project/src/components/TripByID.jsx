@@ -18,7 +18,13 @@ export default function TripByID(props) {
     const handleDelete = async (e,id,tripId) =>{
         e.preventDefault();
         console.log(id);
-        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
+         const deleteTransaction = async (id,tempId)=>{
+            await fetch("http://localhost:8080/transactions/" + id,{
+                method:"DELETE",
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(()=>console.log("transaction deleted"))}
+            deleteTransaction(id);
     }
 
     const handleUpdate = (e,id,name,description,amount,currency,tripId) =>{
@@ -46,6 +52,7 @@ export default function TripByID(props) {
         <table>
             <tr>
                 <th>Transactions</th>
+                <th>description</th>
                 <th>Amount</th>
                 <th>Currency</th>
             </tr>
@@ -56,7 +63,6 @@ export default function TripByID(props) {
                 <td>{ans.description}</td>
                 <td>{ans.amount}</td>
                 <td>{ans.currency}</td>
-{/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
                 <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}>Update</button></td>
                 <td><button onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}>Delete</button></td>
             </tr>

@@ -43,7 +43,7 @@ export default function Transactions(props) {
             setIsLoading(false)
 
 
-    },[])
+    },[transactions])
 
     if (isLoading) {
         return (<div>Fetching transactions from database</div>);
@@ -69,7 +69,13 @@ export default function Transactions(props) {
     const handleDelete = async (e,id, tripId) =>{
         e.preventDefault();
         console.log(id);
-        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
+         const deleteTransaction = async (id)=>{
+            await fetch("http://localhost:8080/transactions/" + id,{
+                method:"DELETE",
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(()=>console.log("transaction deleted"))}
+            deleteTransaction(id);
     }
 
     const handleUpdate = (e,id,name,description,amount,currency) =>{
@@ -148,7 +154,7 @@ const handleFavorite = async (e,id,position) => {
                     <td>{ans.description}</td>
                     <td>{ans.amount}</td>
                     <td>{ans.currency}</td>
-                    <td>{ans.trip.name}</td>
+                    <td>{ans.tripId}</td>
                     <td><button onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}>Update</button></td>
                     <td><button onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}>Delete</button></td>
                     <td>

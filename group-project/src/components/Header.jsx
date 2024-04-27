@@ -7,6 +7,8 @@ export default function Header() {return (
             <Link to="/test">| Test |</Link>
             <Link to="/trips">| Trips |</Link>
             <Link to="/transactions">| Transactions |</Link>
+            <Link to="/transactions/convert">| Convert! |</Link>
+            <Link to="/transactions/chart">| Chart Breakdown |</Link>
         </nav>
         <br />
         <br />
