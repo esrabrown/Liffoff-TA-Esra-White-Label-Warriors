@@ -7,8 +7,8 @@ export default function UserRegistration() {
     const [formData, setFormData] = useState({
         username:'',
         password: '',
-        firstName: '',
-        lastName: '',
+        name: '',
+        email: '',
         role: ''
     });
     const handleChange = (e) => {
@@ -31,7 +31,6 @@ export default function UserRegistration() {
                     body:JSON.stringify(formData)
 
             }).then(res=>res.json()).then((result)=>{
-
                 localStorage.setItem("token", result['token']);
                 console.log(localStorage.getItem('token'));
                 console.log(result['token']);
@@ -52,14 +51,8 @@ export default function UserRegistration() {
 
         <form method="POST">
             <div className="form-group">
-                <label htmlFor="firstName">First Name</label>
-                <input type="text" className="form-control" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
-            </div>
-            <br />
-
-            <div className="form-group">
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text" className="form-control" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                <label htmlFor="firstName">Name</label>
+                <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} required />
             </div>
             <br />
 
@@ -71,7 +64,13 @@ export default function UserRegistration() {
 
             <div className="form-group">
                 <label htmlFor="username">Username</label>
-                <input type="username" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} required />
+                <input type="text" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} required />
+            </div>
+            <br />
+
+            <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
             <br />
 

@@ -33,8 +33,6 @@ export default function Profile() {
     const [favoriteRates, setFavoriteRates] = useState([]);
     const [ profile, setProfile ] = useState([]);
 
-    // const { username } = useParams();
-
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
@@ -46,12 +44,6 @@ export default function Profile() {
                         Accept: 'application/json'
                     }
                 });
-                  // const response = await axios.get('http://localhost:8080/profile', {
-                  //       headers: {
-                  //           Authorization: `Bearer ${token}`
-                  //       }
-                  //   });
-                  //   setUser(response.data);
                     const decodedToken = jwtDecode(token);
                     setUser(decodedToken);
                 setProfile(res.data);
@@ -68,10 +60,10 @@ export default function Profile() {
 
     }, []);
 
-    const login = useGoogleLogin({
-      onSuccess: (codeResponse) => setUser(codeResponse),
-      onError: (error) => console.log('Login Failed:', error)
-  });
+  //   const login = useGoogleLogin({
+  //     onSuccess: (codeResponse) => setUser(codeResponse),
+  //     onError: (error) => console.log('Login Failed:', error)
+  // });
 
 //   useEffect(
 //     () => {
@@ -160,7 +152,7 @@ const logOut = () => {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
-        {profile ? (
+        {user ? (
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
@@ -226,7 +218,7 @@ const logOut = () => {
                     <MDBCard className="mb-4 mb-md-0">
                         <MDBCardBody>
                             <MDBCardText className="mb-4">Favorite Currency Exchange Rates</MDBCardText>
-                                <MDBListGroup flush>
+                                <MDBListGroup flush className="rounded-3">
                                     {favoriteRates.map(rate => (
                                         <MDBListGroupItem key={rate.id}>
                                             {rate.currencyPair} - {rate.rate}

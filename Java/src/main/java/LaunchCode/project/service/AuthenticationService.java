@@ -34,10 +34,10 @@ public class AuthenticationService {
             return new AuthenticationResponse(null); //, "User already exists"
         }
         User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setName(request.getName());
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(request.getEmail());
 
         user.setRole(request.getRole());
 

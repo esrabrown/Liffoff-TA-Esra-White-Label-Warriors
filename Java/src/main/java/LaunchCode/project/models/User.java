@@ -15,16 +15,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     private String username;
+
+    private String email;
 
     private String password;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @Enumerated(value = EnumType.STRING)
+    private RegistrationSource source;
+
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
@@ -36,20 +40,12 @@ public class User implements UserDetails {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -101,11 +97,27 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public RegistrationSource getSource() {
+        return source;
+    }
+
+    public void setSource(RegistrationSource source) {
+        this.source = source;
+    }
+
     public List<Token> getTokens() {
         return tokens;
     }
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
