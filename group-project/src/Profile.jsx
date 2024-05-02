@@ -29,40 +29,67 @@ import {
 export default function Profile() {
 
     const [user, setUser] = useState({
+      username:'',
+      password: '',
       firstName: '',
       lastName: '',
-      username: '',
-      defaultCurrency: ''
-  });
+      defaultCurrency:''
+    });
+
+    const { id } = useParams();
+
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setUser(decodedToken.sub);
+      } else{
+        setUser(null);
+      }
+    }, []);
+
+    // useEffect(() => {
+    //   loadUser();
+    // }, []);
+
+    // const loadUser = async () => {
+    //   const result = await axios.get (`http:localhost:8080/user/${id}`)
+    //   setUser(result.data);
+    // }
 
     const [favoriteRates, setFavoriteRates] = useState([]);
 
+
+
+
+
+    //OLD:
     // const { username } = useParams();
 
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (token) {
-                  // const response = await axios.get('http://localhost:8080/profile', {
-                  //       headers: {
-                  //           Authorization: `Bearer ${token}`
-                  //       }
-                  //   });
-                  //   setUser(response.data);
-                    const decodedToken = jwtDecode(token);
-                    setUser(decodedToken);
-                } else {
-                  setUser(null);
-                }
-            } catch (error) {
-                console.error('Error fetching user profile:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchUserProfile = async () => {
+    //         try {
+    //             const token = localStorage.getItem('token');
+    //             if (token) {
+    //               // const response = await axios.get('http://localhost:8080/profile', {
+    //               //       headers: {
+    //               //           Authorization: `Bearer ${token}`
+    //               //       }
+    //               //   });
+    //               //   setUser(response.data);
+    //                 const decodedToken = jwtDecode(token);
+    //                 setUser(decodedToken);
+    //             } else {
+    //               setUser(null);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching user profile:', error);
+    //         }
+    //     };
     
-        fetchUserProfile();
+    //     fetchUserProfile();
 
-    }, []);
+    // }, []);
 
   //   useEffect(() => {
   //     const displayUserInfo = async () => {

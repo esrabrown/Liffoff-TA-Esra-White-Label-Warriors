@@ -4,6 +4,10 @@ import NavBar from './components/NavBar';
 import { Link } from 'react-router-dom';
 
 export default function Login() {
+        // app.use(cors());
+        // app.get('/cors', (req, res) => {
+        //   res.set('Access-Control-Allow-Origin', '*');
+        // });
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -27,26 +31,6 @@ export default function Login() {
             console.error('Login failed:', error);
         }
     };
-// added
-    const handleGoogleLogin = async () => {
-      try {
-        // Make a request to the backend server to initiate the Google OAuth2 flow
-        const response = await axios.get('/auth/google');
-        window.location.href = response.data.redirectUrl;
-      } catch (error) {
-        console.error('Error initiating Google login:', error);
-      }
-    };
-// added
-    const handleFacebookLogin = async () => {
-      try {
-        // Make a request to the backend server to initiate the Facebook OAuth2 flow
-        const response = await axios.get('/auth/facebook');
-        window.location.href = response.data.redirectUrl;
-      } catch (error) {
-        console.error('Error initiating Facebook login:', error);
-      }
-    };
 
     return (
         <>
@@ -64,12 +48,6 @@ export default function Login() {
                 <br></br>
                 <button type="submit" className="btn btn-primary btn-lg">Login</button>
             </form>
-            <br></br>
-            <button className="btn btn-secondary btn-lg" onClick={handleGoogleLogin}>Login with Google</button>
-            <br></br>
-            <br></br>
-            <button className="btn btn-secondary btn-lg" onClick={handleFacebookLogin}>Login with Facebook</button>
-            <br></br> 
             <br></br>
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>
         </>

@@ -30,6 +30,8 @@ import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 import TripUpdate from "./components/TripUpdate.jsx"
 import TripDelete from "./components/TripDelete.jsx"
+import app from './App';
+import UserList from './components/UserList.jsx'
 
 const router = createBrowserRouter([
     {
@@ -127,9 +129,19 @@ const router = createBrowserRouter([
         path: "/trips/delete/:id",
         element: <TripDelete />,
     },
+    {
+        path: "/users",
+        element: <UserList />,
+    },
 
 
 ]);
+
+        // const cors = require('cors');
+        // app.use(cors());
+        // app.get('/cors', (req, res) => {
+        //   res.set('Access-Control-Allow-Origin', '*');
+        // });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

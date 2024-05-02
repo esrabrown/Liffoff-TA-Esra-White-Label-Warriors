@@ -23,6 +23,8 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String defaultCurrency;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
@@ -107,5 +109,13 @@ public class User implements UserDetails {
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
     }
 }
