@@ -30,6 +30,7 @@ import TripByID from "./components/TripByID.jsx"
 import TimeSeriesGraph from "./components/TimeSeriesGraph.jsx"
 import TripUpdate from "./components/TripUpdate.jsx"
 import TripDelete from "./components/TripDelete.jsx"
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const router = createBrowserRouter([
     {
@@ -132,7 +133,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-  <RouterProvider router={router} />
-  </React.StrictMode>
-)
+    <GoogleOAuthProvider clientId="172648903163-21rk129pjh909hkt8irlp5d0cadvo5ml.apps.googleusercontent.com ">
+        <React.StrictMode>
+        <RouterProvider router={router} />
+        </React.StrictMode>
+    </GoogleOAuthProvider>,
+);

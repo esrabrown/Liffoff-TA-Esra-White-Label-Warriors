@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import NavBar from "./NavBar.jsx";
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserRegistration() {
     const [formData, setFormData] = useState({

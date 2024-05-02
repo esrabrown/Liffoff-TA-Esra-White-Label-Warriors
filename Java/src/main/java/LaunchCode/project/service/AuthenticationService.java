@@ -43,7 +43,7 @@ public class AuthenticationService {
 
         user = userRepository.save(user);
 
-        String jwt = jwtService.generateToken(user);
+        String jwt = jwtService.generateAccessToken(String username, Role USER, String jwtPrivateKey);
 
         saveUserToken(jwt, user);
 
@@ -60,7 +60,7 @@ public class AuthenticationService {
         );
 
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String jwt = jwtService.generateToken(user);
+        String jwt = jwtService.generateAccessToken(String username, List<String> roleArray, String jwtPrivateKey);
 
         revokeAllTokenByUser(user);
         saveUserToken(jwt, user);

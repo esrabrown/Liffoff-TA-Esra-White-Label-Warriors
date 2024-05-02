@@ -28,16 +28,20 @@ import {
 
 export default function Profile() {
 
-    const [user, setUser] = useState({
-      firstName: '',
-      lastName: '',
-      username: '',
-      defaultCurrency: ''
-  });
-
+    const [user, setUser] = useState(null);
+    // const {id} = useParams();
     const [favoriteRates, setFavoriteRates] = useState([]);
 
     // const { username } = useParams();
+
+    // const loadUserInfo = async () => {
+    //   const result = await axios.get(`http:localhost:8080/profile/${id}`)
+    //   setUser(result.data)
+    // };
+
+    // useEffect(() => {
+    //   loadUserInfo()
+    // }, [])
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -128,7 +132,7 @@ export default function Profile() {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
-        {user ? (
+        { user ? (
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
@@ -151,10 +155,10 @@ export default function Profile() {
                     <MDBIcon fab icon="google fa-lg" style={{ color: '#55acee' }} />
                     <MDBCardText>Google Login</MDBCardText>
                   </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                  {/* <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
                     <MDBCardText>Facebook Login</MDBCardText>
-                  </MDBListGroupItem>
+                  </MDBListGroupItem> */}
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
