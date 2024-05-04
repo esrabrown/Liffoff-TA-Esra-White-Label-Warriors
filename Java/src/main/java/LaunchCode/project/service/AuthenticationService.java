@@ -17,14 +17,14 @@ import java.util.List;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, TokenRepository tokenRepository) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, AuthenticationManager authenticationManager, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
+        this.tokenService = tokenService;
         this.authenticationManager = authenticationManager;
         this.tokenRepository = tokenRepository;
     }
@@ -43,7 +43,7 @@ public class AuthenticationService {
 
         user = userRepository.save(user);
 
-        String jwt = jwtService.generateToken(user);
+        String jwt = tokenService.generateToken(user);
 
         saveUserToken(jwt, user);
 
@@ -60,7 +60,7 @@ public class AuthenticationService {
         );
 
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String jwt = jwtService.generateToken(user);
+        String jwt = tokenService.generateToken(user);
 
         revokeAllTokenByUser(user);
         saveUserToken(jwt, user);
