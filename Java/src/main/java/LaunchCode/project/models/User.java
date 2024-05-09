@@ -1,6 +1,12 @@
 package LaunchCode.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +31,10 @@ public class User implements UserDetails {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
     @OneToMany(mappedBy = "user")
+//            , fetch=FetchType.LAZY)
+//    @Fetch(FetchMode.JOIN)
     private List<Token> tokens;
 
     public void setId(Integer id) {
@@ -101,6 +110,7 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+//    @JsonManagedReference
     public List<Token> getTokens() {
         return tokens;
     }

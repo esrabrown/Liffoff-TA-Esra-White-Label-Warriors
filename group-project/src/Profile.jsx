@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 // import { useParams } from "react-router-dom";
 // import { UserAuth } from './context/AuthContext.jsx';
 import { useAuth } from "./context/AuthContext.jsx";
+import { useParams } from "react-router-dom";
 
 import React from 'react';
 import {
@@ -40,26 +41,38 @@ export default function Profile() {
 
     const [favoriteRates, setFavoriteRates] = useState([]);
 
-    // const { username } = useParams();
-
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (token) {
-                  // const response = await axios.get('http://localhost:8080/profile', {
-                  //       headers: {
-                  //           Authorization: `Bearer ${token}`
-                  //       }
-                  //   });
-                  //   setUser(response.data);
-                    const decodedToken = jwtDecode(token);
-                    setAuthUser(decodedToken);
-                } else {
-                  setAuthUser(null);
-                }
+                axios.get("http://localhost:8080/profile/user", {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                  }
+                }).then(res=>res).then((result) => {setAuthUser(result);})
+            //     if (token) {
+            //       response = await axios.get(`http://localhost:8080/profile/user`, {
+            //             headers: {
+            //                 Authorization: `Bearer ${token}`
+            //             }
+            //         });
+            //       //   setUser(response.data);
+            //         // const decodedToken = jwtDecode(token);
+            //         // setAuthUser(decodedToken);
+            //     } else {
+            //       // setAuthUser(null);
+            //       response = await axios.get("http://localhost:8080/profile", {
+            //           headers: {
+            //           Authorization: `Bearer ${token}`
+            //       }
+            //       });
+            //     }
+            //     setAuthUser(response.data)
+            // } catch (error) {
+            //     console.error('Error fetching user profile:', error);
             } catch (error) {
-                console.error('Error fetching user profile:', error);
+              console.error("Failed to fetch:", error);
             }
         };
     
