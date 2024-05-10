@@ -48,6 +48,6 @@ public class ProfileController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(user);
-    } //user.tokens=[] when creating a user, data that belongs to user that belongs to token so info isn't pulling correctly
+    } //user.tokens=[] when creating a user, data that belongs to user belongs to token so info isn't pulling correctly
 }
 
