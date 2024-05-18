@@ -283,7 +283,7 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
     // console.log(allRates);
 
 }
-console.log(allRates)
+console.log(allRates) 
 
   //Handle Click for Favorite Buttons
   const handleFavorite = async (e, id, favorite) => {
